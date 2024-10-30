@@ -11,23 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 
 #[Entity(repositoryClass: SerieRepository::class)]
-class Serie
+class Serie extends Media
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
     /**
      * @var Collection<int, Season>
      */
@@ -36,6 +21,7 @@ class Serie
 
     public function __construct()
     {
+        parent::__construct();
         $this->seasons = new ArrayCollection();
     }
 

@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style/style.css" rel="stylesheet">
+    <link href="../../../template-html/style/style.css" rel="stylesheet">
     <title>Streemi - Détail</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="font-montserrat text-sm bg-white " >
 <div class="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200">
-    {{ include('partials/menu-left.html.twig') }}
+    {% include 'parts/menu-left.html.twig' %}
     <main class=" flex-1 py-10  px-5 sm:px-10 ">
         <header class=" font-bold text-lg flex items-center gap-x-3 md:hidden mb-9">
                 <span class="mr-6">
@@ -38,7 +38,7 @@
         </section>
         <section class="mt-9">
             <div class="flex flex-col justify-between mt-4 bg-black/10 bg-blend-multiply h-96 overflow-hidden bg-cover bg-center px-7 pt-4 pb-6 text-white -ml-10 -mr-10 rounded-none"
-                 style="background-image: url('images/inception.jpg');" >
+                 style="background-image: url('../../../template-html/images/inception.jpg');" >
                 <div class="flex -space-x-1 items-center ">
                     <img class="rounded-full w-7 h-7 shadow-lg border border-white" src="https://random.imagecdn.app/100/100?a" alt="" srcset="">
                     <img class="rounded-full w-7 h-7 shadow-lg border border-white" src="https://random.imagecdn.app/100/100?b" alt="" srcset="">

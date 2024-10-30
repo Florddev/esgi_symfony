@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class SubscribeController extends AbstractController
+class HomeController extends AbstractController
 {
-    #[Route('/subscribe', name: 'subscribe.index')]
+    #[Route(path: '/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('subscribe/index.html.twig');
+        return $this->render('index.html.twig');
     }
 }
