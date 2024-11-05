@@ -7,9 +7,9 @@
 {% block contenu_page %}
     <section>
         <nav class="flex space-x-6 text-gray-400 font-medium">
-            <a href="{{ path('show_category') }}" class="hover:text-gray-700">Séries</a>
-            <a href="{{ path('show_category') }}" class="text-gray-700 font-semibold">Films</a>
-            <a href="{{ path('show_category') }}" class="hover:text-gray-700 ">Animés</a>
+            <a href="" class="hover:text-gray-700">Séries</a>
+            <a href="" class="text-gray-700 font-semibold">Films</a>
+            <a href="" class="hover:text-gray-700 ">Animés</a>
         </nav>
 
         <div class="flex flex-col items-center mt-9">
@@ -34,11 +34,11 @@
             </div>
         </div>
 
-        <div class="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5 ">
+        <ul class="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5 ">
             {% include 'parts/movie_card_homepage.html.twig' %}
             {% include 'parts/movie_card_homepage.html.twig' %}
             {% include 'parts/movie_card_homepage.html.twig' %}
-        </div>
+        </ul>
     </section>
     <section class="mt-9">
         <div class="flex items-center justify-between">
@@ -46,20 +46,9 @@
         </div>
 
         <div class="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5">
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-            {% include 'parts/card_category.html.twig' %}
-
+            {% for category in categories %}
+                {% include 'parts/card_category.html.twig' %}
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

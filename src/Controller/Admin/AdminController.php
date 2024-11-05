@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/admin')]
 class AdminController extends AbstractController
 {
-    #[Route(path: '/', name: 'admin_homepage')]
+    #[Route(path: '/', name: 'admin')]
     public function homepage(): Response
     {
         return $this->render('admin/homepage.html.twig');
