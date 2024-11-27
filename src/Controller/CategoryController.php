@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Movie;
+namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
-use App\Repository\MediaRepository;
-use App\Repository\MovieRepository;
-use App\Repository\SerieRepository;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

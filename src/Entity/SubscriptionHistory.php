@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\SubscriptionHistoryRepository;
+use App\Repository\SubscriptionListRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SubscriptionHistoryRepository::class)]
+#[ORM\Entity(repositoryClass: SubscriptionListRepository::class)]
 class SubscriptionHistory
 {
     #[ORM\Id]

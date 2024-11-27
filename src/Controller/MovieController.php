@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Movie;
+namespace App\Controller;
 
 use App\Entity\Movie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

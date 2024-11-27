@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Other;
+namespace App\Controller;
 
 use App\Repository\SubscriptionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
