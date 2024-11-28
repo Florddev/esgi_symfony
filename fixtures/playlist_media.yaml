@@ -1,0 +1,5 @@
+App\Entity\PlaylistMedia:
+  playlist_media_{1..50}:
+    playlist: '@playlist_*'
+    media: '@<randomElement(["movie_*", "serie_*"])>'
+    position: '<current()>'

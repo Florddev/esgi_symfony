@@ -1,0 +1,6 @@
+App\Entity\WatchHistory:
+  watch_history_{1..100}:
+    watcher: '@user_*'
+    media: '@<randomElement(["movie_*", "serie_*"])>'
+    watchedAt: '<dateTimeBetween("-6 months", "now")>'
+    watchDuration: '<numberBetween(10, 180)>'

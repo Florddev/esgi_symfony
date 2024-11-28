@@ -1,0 +1,7 @@
+App\Entity\User:
+  user_{1..10}:
+    username: '<username()>'
+    email: '<email()>'
+    password: '<password()>'
+    accountStatus: '<randomElement([1, 2, 3])>'
+    currentSubscription: '@subscription_*'

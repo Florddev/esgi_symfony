@@ -24,6 +24,7 @@ use DateTime;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -40,6 +41,13 @@ class AppFixtures extends Fixture
     public const MAX_SUBSCRIPTIONS_HISTORY_PER_USER = 3;
     public const MAX_COMMENTS_PER_MEDIA = 10;
     public const MAX_PLAYLIST_SUBSCRIPTION_PER_USERS = 3;
+
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -128,6 +136,11 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < self::MAX_USERS; $i++) {
             $user = new User();
             $user->setEmail(email: "test_$i@example.com");
+
+            $hashedPassword = $this->hasher->hashPassword($user, 'password123');
+            $user->setPassword($hashedPassword);
+            $user->setRoles(['ROLE_USER']);
+
             $user->setUsername(username: "test_$i");
             $user->setPassword(password: 'coucou');
             $user->setAccountStatus(UserAccountStatusEnum::ACTIVE);

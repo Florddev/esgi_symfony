@@ -1,0 +1,4 @@
+App\Entity\Category:
+  category_{1..5}:
+    nom: '<word()>'
+    label: '<sentence(3)>'

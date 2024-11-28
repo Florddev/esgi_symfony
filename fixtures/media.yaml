@@ -1,0 +1,26 @@
+App\Entity\Movie:
+  movie_{1..10}:
+    title: '<sentence(3)>'
+    shortDescription: '<text(100)>'
+    longDescription: '<text(300)>'
+    releaseDate: '<dateTimeBetween("-5 years", "now")>'
+    coverImage: '<imageUrl(640, 480)>'
+    staff: '<arrayOf(3, "@{word()}")>'
+    casting: '<arrayOf(5, "@{name()}")>'
+    categories: '3x @category_*'
+    languages: '2x @language_*'
+    duration: '<numberBetween(90, 180)>'
+
+App\Entity\Serie:
+  serie_{1..5}:
+    title: '<sentence(3)>'
+    shortDescription: '<text(100)>'
+    longDescription: '<text(300)>'
+    releaseDate: '<dateTimeBetween("-5 years", "now")>'
+    coverImage: '<imageUrl(640, 480)>'
+    staff: '<arrayOf(3, "@{word()}")>'
+    casting: '<arrayOf(5, "@{name()}")>'
+    categories: '3x @category_*'
+    languages: '2x @language_*'
+    episodeCount: '<numberBetween(8, 24)>'
+    seasonCount: '<numberBetween(1, 8)>'

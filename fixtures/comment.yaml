@@ -1,0 +1,6 @@
+App\Entity\Comment:
+  comment_{1..200}:
+    content: '<text()>'
+    publisher: '@user_*'
+    media: '@<randomElement(["movie_*", "serie_*"])>'
+    publishedAt: '<dateTimeBetween("-1 year", "now")>'

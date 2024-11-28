@@ -1,0 +1,5 @@
+App\Entity\Subscription:
+  subscription_{1..3}:
+    name: '<word()>'
+    price: '<numberBetween(10, 50)>'
+    description: '<text()>'
