@@ -16,28 +16,34 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
-//    /**
-//     * @return Movie[] Returns an array of Movie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findBySearch(string $search): array
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.title LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->orderBy('m.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Movie
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findRecommended(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.releaseDate', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function search(string $query): array
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.title LIKE :query')
+            ->orWhere('m.shortDescription LIKE :query')
+            ->orWhere('m.longDescription LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->orderBy('m.releaseDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

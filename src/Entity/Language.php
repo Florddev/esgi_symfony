@@ -16,9 +16,13 @@ class Language
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, minMessage: 'Le nom doit faire au moins {{ limit }} caractères')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 3)]
+    #[Assert\NotBlank]
+    #[Assert\Length(exactly: 3, exactMessage: 'Le code doit faire exactement {{ limit }} caractères')]
     private ?string $code = null;
 
     /**

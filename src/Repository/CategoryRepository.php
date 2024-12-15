@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @extends ServiceEntityRepository<Category>
@@ -16,28 +17,17 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-//        /**
-//         * @return Category[] Returns an array of Category objects
-//         */
-        public function findPopular(): array
-        {
-//            return $this->createQueryBuilder('c')
-//                ->andWhere('c.exampleField = :val')
-//                ->setParameter('val', $value)
-//                ->orderBy('c.id', 'ASC')
-//                ->setMaxResults(10)
-//                ->getQuery()
-//                ->getResult()
-            ;
-        }
+    #[Route('/discover', name: 'movie_discover')]
+    public function index(
+        CategoryRepository $categoryRepository,
+        MovieRepository $movieRepository,
+    ): Response {
+        $categories = $categoryRepository->findAll();
+        $recommendedMovies = $movieRepository->findRecommended(limit: 3); // Les 3 films les plus récents par exemple
 
-    //    public function findOneBySomeField($value): ?Category
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        return $this->render('movie/discover.html.twig', [
+            'categories' => $categories,
+            'recommendedMovies' => $recommendedMovies
+        ]);
+    }
 }

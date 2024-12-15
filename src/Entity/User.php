@@ -6,6 +6,7 @@ use App\Enum\UserAccountStatusEnum;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use PHPUnit\Util\Json;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,8 +29,8 @@ class User implements UserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?Json $role = null;
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
     #[ORM\Column(enumType: UserAccountStatusEnum::class)]
     private ?UserAccountStatusEnum $accountStatus = null;
@@ -66,6 +67,21 @@ class User implements UserInterface
      */
     #[ORM\OneToMany(targetEntity: WatchHistory::class, mappedBy: 'watcher')]
     private Collection $watchHistories;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $registeredAt;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $lastLoginAt = null;
+
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user')]
+    private Collection $ratings;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $preferences = null; // Préférences utilisateur (genres favoris, etc.)
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
 
     public function __construct()
     {
@@ -294,7 +310,6 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // Garantir que tous les users ont ROLE_USER
         $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
@@ -306,6 +321,21 @@ class User implements UserInterface
 
     public function eraseCredentials(): void
     {
-        // TODO: Implement eraseCredentials() method.
+        // ...
+    }
+
+
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $resetToken = null;
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+        return $this;
     }
 }

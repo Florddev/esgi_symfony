@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche - {{ query }}{% endblock %}
+
+{% block contenu_page %}
+    <section>
+        <h1 class="text-lg font-medium text-black">Résultats pour
+            <span class="font-bold text-red-600">"{{ query }}"</span>
+        </h1>
+
+        <div class="flex space-x-4 mt-4">
+            <a href="{{ path('search', {q: query}) }}"
+               class="px-4 py-2 rounded-lg {% if type == 'all' %}bg-red-600 text-white{% else %}bg-gray-100 hover:bg-gray-200{% endif %}">
+                Tout
+            </a>
+            <a href="{{ path('search', {q: query, type: 'movie'}) }}"
+               class="px-4 py-2 rounded-lg {% if type == 'movie' %}bg-red-600 text-white{% else %}bg-gray-100 hover:bg-gray-200{% endif %}">
+                Films
+            </a>
+            <a href="{{ path('search', {q: query, type: 'serie'}) }}"
+               class="px-4 py-2 rounded-lg {% if type == 'serie' %}bg-red-600 text-white{% else %}bg-gray-100 hover:bg-gray-200{% endif %}">
+                Séries
+            </a>
+        </div>
+
+        {% if results.movies is defined and results.movies|length > 0 %}
+            <section class="mt-9">
+                <h2 class="font-semibold text-gray-700 text-base mb-4">Films</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    {% for movie in results.movies %}
+                        {% include 'parts/movie_card_homepage.html.twig' with {'movie': movie} %}
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        {% if results.series is defined and results.series|length > 0 %}
+            <section class="mt-9">
+                <h2 class="font-semibold text-gray-700 text-base mb-4">Séries</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    {% for serie in results.series %}
+                        {% include 'parts/movie_card_homepage.html.twig' with {'movie': serie} %}
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        {% if (results.movies is not defined or results.movies|length == 0) and
+            (results.series is not defined or results.series|length == 0) %}
+            <div class="mt-9 text-center p-8 bg-gray-100 rounded-lg">
+                <p class="text-gray-600">Aucun résultat trouvé pour "{{ query }}"</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

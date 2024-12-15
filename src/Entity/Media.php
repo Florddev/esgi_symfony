@@ -74,6 +74,21 @@ class Media
     #[ORM\Column]
     private array $casting = [];
 
+    #[ORM\Column(nullable: true)]
+    private ?int $duration = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1, nullable: true)]
+    private ?float $rating = null;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $viewCount = 0;
+
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $trailers = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $externalIds = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();

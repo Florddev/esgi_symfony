@@ -15,10 +15,15 @@ class Category
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, minMessage: 'Le nom doit faire au moins {{ limit }} caractères')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, minMessage: 'Le label doit faire au moins {{ limit }} caractères')]
     private ?string $label = null;
 
     /**

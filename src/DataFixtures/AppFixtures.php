@@ -44,7 +44,10 @@ class AppFixtures extends Fixture
 
     private UserPasswordHasherInterface $hasher;
 
-    public function __construct(UserPasswordHasherInterface $hasher)
+    public function __construct(
+        UserPasswordHasherInterface $hasher,
+        private UserPasswordHasherInterface $passwordHasher
+    )
     {
         $this->hasher = $hasher;
     }
@@ -124,29 +127,27 @@ class AppFixtures extends Fixture
             if ($media instanceof Serie) {
                 $this->createSeasons($manager, $media);
             }
-
-//            if ($media instanceof Movie) {
-//                $media->setDuration(duration: random_int(60, 180));
-//            }
         }
     }
 
     protected function createUsers(ObjectManager $manager, array &$users): void
     {
+        $admin = new User();
+        $admin->setEmail('admin@example.com');
+        $admin->setUsername('Admin');
+        $hashedPassword = $this->passwordHasher->hashPassword($admin, 'password123');
+        $admin->setPassword($hashedPassword);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
         for ($i = 0; $i < self::MAX_USERS; $i++) {
             $user = new User();
-            $user->setEmail(email: "test_$i@example.com");
-
-            $hashedPassword = $this->hasher->hashPassword($user, 'password123');
+            $user->setEmail("user$i@example.com");
+            $user->setUsername("user$i");
+            $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
             $user->setPassword($hashedPassword);
-            $user->setRoles(['ROLE_USER']);
-
-            $user->setUsername(username: "test_$i");
-            $user->setPassword(password: 'coucou');
-            $user->setAccountStatus(UserAccountStatusEnum::ACTIVE);
             $users[] = $user;
-
-            $manager->persist(object: $user);
+            $manager->persist($user);
         }
     }
 

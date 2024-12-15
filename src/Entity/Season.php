@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SeasonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
@@ -27,6 +28,18 @@ class Season
     #[ORM\ManyToOne(inversedBy: 'seasons')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Serie $serie = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $synopsis = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $posterImage = null;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $releaseDate;
 
     public function __construct()
     {

@@ -17,10 +17,9 @@ class ForgotPasswordController {
         Request $request,
         EntityManagerInterface $em,
         MailerInterface $mailer
-    ): Response
-    {
+    ): Response {
         if ($request->isMethod('POST')) {
-            $email = $request->get('_email');
+            $email = $request->request->get('_email');
             $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
 
             if ($user) {
@@ -42,6 +41,7 @@ class ForgotPasswordController {
                 $this->addFlash('success', 'Email envoyé');
             }
         }
-        return $this->render('security/forgot.html.twig');
+
+        return $this->render('auth/forgot.html.twig');
     }
 }

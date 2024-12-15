@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="flex min-h-screen 2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200">
+        {% include 'parts/menu-left.html.twig' %}
+        <main class="flex-1 py-10 px-5 sm:px-10">
+            <h1 class="text-lg font-medium text-black mb-9">Gestion des <span class="font-bold text-red-600">catégories</span></h1>
+
+            <a href="{{ path('app_category_new') }}" class="flex flex-col items-center mt-9 w-full">
+                <div class="relative flex w-full bg-red-600 flex-row p-3 items-center justify-center rounded-lg overflow-hidden border cursor-pointer transition hover:bg-red-700 text-white">
+                    <span class="font-bold mr-2">
+                        <svg class="h-6 w-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus-circle</title><path d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
+                    </span>
+                    <span class="capitalize font-medium text-md">Ajouter une catégorie</span>
+                </div>
+            </a>
+
+            <div class="mt-9">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                    <tr>
+                        <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                        <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Label</th>
+                        <th class="px-6 py-3 bg-gray-50"></th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    {% for category in categories %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap">{{ category.nom }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap">{{ category.label }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="text-orange-400 hover:text-orange-500">
+                                    <svg class="h-5 w-5 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                    </svg>
+                                </a>
+                                {{ include('category/_delete_form.html.twig') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+{% endblock %}

@@ -1,24 +1,28 @@
 <?php
+// src/Controller/ResetPasswordController.php
 
 namespace App\Controller;
 
 use App\Entity\User;
+use Cassandra\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Attribute\Route;
 
-class ResetPasswordController
+class ResetPasswordController extends AbstractController
 {
-    #[Route('/reset-password', name: 'app_reset_password')]
+    #[Route('/reset-password/{token}', name: 'app_reset_password')]
     public function resetPassword(
         Request $request,
+        string $token,
         EntityManagerInterface $em,
-        UserPasswordHasherInterface $hasher
-    ): Response
-    {
-        $token = $request->get('token');
+        UserPasswordHasherInterface $passwordHasher
+    ): Response {
         $user = $em->getRepository(User::class)->findOneBy(['resetToken' => $token]);
 
         if (!$user) {
@@ -26,11 +30,11 @@ class ResetPasswordController
         }
 
         if ($request->isMethod('POST')) {
-            $password = $request->get('password');
-            $confirm = $request->get('confirm');
+            $password = $request->request->get('password');
+            $confirm = $request->request->get('confirm');
 
             if ($password === $confirm) {
-                $hashedPassword = $hasher->hashPassword($user, $password);
+                $hashedPassword = $passwordHasher->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);
                 $user->setResetToken(null);
                 $em->flush();
@@ -40,7 +44,7 @@ class ResetPasswordController
             }
         }
 
-        return $this->render('security/reset.html.twig', [
+        return $this->render('auth/reset.html.twig', [
             'token' => $token
         ]);
     }
